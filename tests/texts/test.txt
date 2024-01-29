@@ -1,0 +1,5 @@
+Term tests: There will be three term tests on the following days:
+1. Test 1: Wednesday Feb 03, 2021
+2. Test 2: Wednesday Mar 03, 2021
+3. Test 3: Wednesday Mar 31, 2021
+The lowest term test score is dropped, and your term test grade (worth 35%) is the average of the remaining two.

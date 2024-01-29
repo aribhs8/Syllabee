@@ -1,0 +1,59 @@
+Calendar Description: Introduction to control systems. Advantages of closed-loop feedback systems. The role of system mathematical model. Block diagrams and system flow graphs. The basic control system design problem, stability in control systems. Frequency response analysis techniques. Root-locus analysis. Elementary lead-lag compensation.
+
+Instructor: Prof. Stephen L. Smith (stephen.smith@uwaterloo.ca)
+• Office hours: Friday 3:00pm-4:00pm via Zoom link
+• Please put “ECE380” at the front of your subject line for all course related email.
+
+Lab Instructor: Carmen Caradima (carmen.caradima@uwaterloo.ca)
+
+Teaching Assistants:
+• Jean-Luc Bastarache (jbastarache@uwaterloo.ca) – Lab TA
+• Craig Joseph Lalumiere (cjlalumiere@uwaterloo.ca ) – Tutorial TA
+
+Website: http://learn.uwaterloo.ca/
+
+Lectures:
+• Asynchronous lectures will be posted each week.
+• Friday 3-4pm will be used as a live Q&A to review the weeks material via Zoom link.
+
+Tutorials: Mondays 4:30-5:20pm. The tutorial will be held live.
+
+Course Objectives: At the end of the course, it is hoped that you have learned:
+• What feedback is and why it is important.
+• How to model a system using differential equations.
+• What it means for a system to be linear.
+• Why we use transfer functions and the frequency domain.
+• What stability means.
+• How to determine if a feedback system is stable.
+• The relation between a systems transfer function and its tracking performance.
+• The Nyquist stability criterion and the meaning of stability margin.
+• How to design a simple feedback controller using frequency-domain methods
+
+Reference Material:
+1. Mandatory Course Notes: Posted on LEARN and can be downloaded as a single PDF.
+2. Optional Supplementary Text: Norman S. Nise, Control Systems Engineering, 7th edition, Wiley, 2014.
+
+Course Grading:
+The grading scheme is as follows:
+Labs: 25% (lab1, lab2, lab3, lab4, lab5) = (3%; 5%; 5%;6%; 6%)
+Term Tests: 35% (best two of three, 17.5% each)
+Final Exam: 40%
+
+• Labs are mandatory. You must obtain 50% or higher on the lab component to pass the course.
+
+Term tests: There will be three term tests on the following days:
+1. Test 1: Wednesday Feb 03, 2021
+2. Test 2: Wednesday Mar 03, 2021
+3. Test 3: Wednesday Mar 31, 2021
+The lowest term test score is dropped, and your term test grade (worth 35%) is the average of the remaining two.
+
+Test and exam rules:
+• Tests and nal exams will be administered via crowdmark.
+• For each test and the exam, you will be given a 24 hour time window in which to complete it. The test/exam will be timed, so once you start you will have a fixed amount of time.
+• Tests and exam are open book in the sense that you may consult your course notes and material posted in the course LEARN site and lecture videos. Use of any other resource (including file-sharing services such as chegg.com, coursehero.com, stack-exchange.com, …) is prohibited. You may not communicate directly or indirectly with any person except the course instructor. You may not use MATLAB or any other computing tool, unless it has been explicitly allowed.
+• Missed Tests:
+– If you miss a test for any reason, then the missed test scores a grade of zero.
+– If you miss two tests, both for valid reasons, then the wrien test will be given a weight of 17.5% and the final exam mark will be given a weight of 57.5%.
+– If you miss three tests, all for valid reasons, then the test mark will be a given a weight of 17.5%, the final exam mark will be given a weight of 57.5%, and you will receive an INC until a makeup test (which will be the source of the test mark) can be arranged.
+– The instructor makes the ultimate determination about the validity of a reason for missing a test.
+

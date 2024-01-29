@@ -1,1 +1,1 @@
-# Syllabee
+# syllabus-scanner
