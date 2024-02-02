@@ -6,3 +6,14 @@ In today's world, creating a business or a _side-hustle_ is easier than ever. Du
 
 ### Goal
 The goal of Syllabee is to first extract tasks from documentation, and then provide suggestions to help users complete and breakdown those tasks. A user can create a project and upload some basic information about what they want the project to do. The app will then scan the data and use GPT to identify what tasks or deliverables need to be completed. Tasks can then be expanded and users will be able to get suggestions on content that can help them complete the task and/or gqin more specifics on what the task requires.
+
+The web app also incorporates collaboration features to allow users to share projects and assign tasks to others. By assessing the work assigned to members and their profiles, the app is able to make intelligent decisions about who to assign work to and who to contact for support.
+
+## Quick Start
+To use the web app, clone the repository and navigate to the WebApp directory. Then use the below command to setup dependencies:
+```
+npm i
+```
+
+## Usage
+See the examples directory for more information on the usage of the app.
