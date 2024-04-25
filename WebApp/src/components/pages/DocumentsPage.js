@@ -21,20 +21,6 @@ const DocumentsPage = () => {
        
     };
 
-    // const updateUI = useCallback(async (headers) => {
-    //     const result = await axios.get(DOCS_API, headers);
-    //     setDocuments(result.data.records);
-    // }, []);
-
-
-    // const handleDelete = async (id) => {
-    //     setBackdropOpen(true);
-    //     // delete specified document
-    //     axios.post(DOCS_API, JSON.stringify({ id: id }), { params: { option: 'delete' }})
-    //         .then(() => updateUI({ params: { type: 'outline' }}).then(() => setBackdropOpen(false)));
-    // };
-
-
     return (
         <Box>
             <Box sx={{ ml: 4, mt: 3, mb: 3 }}>
@@ -50,19 +36,27 @@ const DocumentsPage = () => {
 
             <TabContext value={tab}>
                 <TabList onChange={handleTabChange} aria-label="Document Tabs" sx={{ ml: 3 }}>
-                    <Tab label="Outlines" value="1" />
-                    <Tab label="All" value="2" />
+                    <Tab label="All" value="1" />
+                    <Tab label="Outlines" value="2" />
+                    <Tab label="Non-outlines" value="3" />
                 </TabList>
 
                 <Divider />
 
                 {/* Main Content */}
                 <TabPanel value="1">
+                    <Typography variant='h6' mb={3}>All documents you uploaded or shared with you</Typography>
                     <DocumentList headerParams={{ user_id: `'${userInfo.userId}'` }} dialog={showDialog} setDialog={setDialog} />
                 </TabPanel>
 
                 <TabPanel value="2">
-                    IN DEVELOPMENT
+                    <Typography variant='h6' mb={3}>Outlines you uploaded or shared with you</Typography>
+                    <DocumentList headerParams={{ user_id: `'${userInfo.userId}'` }} dialog={showDialog} setDialog={setDialog} outline={true}/>
+                </TabPanel>
+
+                <TabPanel value="3">
+                    <Typography variant='h6' mb={3}>Non-outlines you uploaded or shared with you</Typography>
+                    <DocumentList headerParams={{ user_id: `'${userInfo.userId}'` }} dialog={showDialog} setDialog={setDialog} outline={false}/>
                 </TabPanel>
             </TabContext>
 

@@ -14,7 +14,7 @@ const CustomCard = (props) => {
     const handleClick = props.onClick;
 
     return (
-        <Card sx={{ maxWidth: 250, mb: 1 }}>
+        <Card sx={{ width: '80vw', maxWidth: 250, mb: 1 }}>
             <CardActionArea onClick={(e) => {handleClick(e, card);}}>
                 <CardMedia 
                     component="img"

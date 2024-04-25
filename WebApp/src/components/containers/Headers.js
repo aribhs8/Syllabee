@@ -12,8 +12,5 @@ export const HeaderGrid = ({ children }) => {
 };
 
 HeaderGrid.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.element),
-        PropTypes.element.isRequired
-    ])
+    children: PropTypes.node
 };

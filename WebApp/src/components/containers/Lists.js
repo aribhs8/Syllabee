@@ -53,7 +53,7 @@ TabList.propTypes = {
 
 export const DocumentList = (props) => {
     // props
-    const { headerParams, dialog, setDialog } = props;
+    const { headerParams, dialog, setDialog, outline } = props;
 
     // states
     const [docs, setDocs] = useState([]);
@@ -164,17 +164,27 @@ export const DocumentList = (props) => {
                     </ToggleButtonGroup>
                 </Grid>
             </Grid>
-
+            
             {docs && (
                 <Grid container spacing={4}>
-                    {docs.map((doc) => (
-                        <DocumentItem
-                            key={doc.id}
-                            document={doc}
-                            onDelete={handleDelete}
-                            onEdit={handleEdit}
-                        />
-                    ))}
+                    {outline !== undefined ?
+                        docs.filter((d) => d.is_outline === outline).map((doc) => (
+                            <DocumentItem
+                                key={doc.id}
+                                document={doc}
+                                onDelete={handleDelete}
+                                onEdit={handleEdit}
+                            />
+                        )) :  
+                        docs.map((doc) => (
+                            <DocumentItem
+                                key={doc.id}
+                                document={doc}
+                                onDelete={handleDelete}
+                                onEdit={handleEdit}
+                            />
+                        ))
+                    }
                 </Grid>
             )}
 
@@ -192,6 +202,7 @@ DocumentList.propTypes = {
     headerParams: PropTypes.object,
     dialog: PropTypes.bool,
     setDialog: PropTypes.func,
+    outline: PropTypes.bool
 };
 
 export const MembersList = (props) => {
@@ -271,7 +282,6 @@ MembersList.propTypes = {
 
 export const TaskList = (props) => {
     const { headerParams } = props;
-
     const [tasks, setTasks] = useState([]);
 
     return (

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const LogIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const { login, getSession } = useContext(AuthContext);
     const navigate = useNavigate();
     const onSubmit = async (event) => {
@@ -16,11 +17,13 @@ const LogIn = () => {
             navigate('/', { replace: true });
 
         } catch (error) {
+            setError(error);
             console.log(error);
         }
 
 
     };
+
     return (
         <div style={styles.container}>
             <h1 style={styles.signInText}>SIGN IN</h1>
@@ -29,9 +32,11 @@ const LogIn = () => {
             </div>
             <div style={styles.inputContainer}>
                 <input type="password" placeholder="Password" style={styles.input}  onChange={(event) => setPassword(event.target.value)} />
+                <div style={styles.error}>{error}</div>
             </div>
             <button style={styles.loginButton} onClick={onSubmit}>Login</button>
-            <p style={styles.signUpText}>
+            <button style={styles.resetPasswordButton}>Reset password</button>
+            <p style={styles.signUpText} onClick={() => navigate('/signup', { replace: true })}>
                 <span style={styles.signUpLink}>Dont have an account? Sign up</span>.
             </p>
         </div>
@@ -42,6 +47,9 @@ export default LogIn;
 
 
 const styles = {
+    error: {
+        color: 'red',
+    },
     container: {
         display: 'flex',
         flexDirection: 'column',
@@ -69,6 +77,16 @@ const styles = {
         cursor: 'pointer',
         border: 'none',
         width: '300px',
+    },
+    resetPasswordButton: {
+        backgroundColor: 'blue',
+        color: 'white',
+        padding: '10px 20px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        border: 'none',
+        width: '300px',
+        marginTop: '15px'
     },
     signUpText: {
         marginTop: '20px',

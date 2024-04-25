@@ -31,7 +31,9 @@ const DataBox = (props) => {
             }
             setBackdrop(false);
         };
-        getData();
+        if (userInfo.userId) {
+            getData();
+        }
         setBackdrop(data ? data.length === 0 : false);
     }, [userInfo]);
 

@@ -24,27 +24,63 @@ const SignUp = () => {
         }
     };
     return (
-        <div>
-            <form>
-                <label>Name</label>
-                <input
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                />
-                <label>Email</label>
-                <input
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                />
-                <label>Password</label>
-                <input
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                />
-                <button onClick={onSubmit}>Submit</button>
-            </form>
+        <div style={styles.container}>
+            <h1 style={styles.signInText}>SIGN UP</h1>
+            <div style={styles.inputContainer}>
+                <input type="name" placeholder="Name" style={styles.input} onChange={(event) => setName(event.target.value)}/>
+            </div>
+            <div style={styles.inputContainer}>
+                <input type="email" placeholder="Email" style={styles.input}  onChange={(event) => setEmail(event.target.value)} />
+            </div>
+            <div style={styles.inputContainer}>
+                <input type="password" placeholder="Password" style={styles.input}  onChange={(event) => setPassword(event.target.value)} />
+            </div>
+            <button style={styles.loginButton} onClick={onSubmit}>Submit</button>
+            <p style={styles.signUpText} onClick={() => navigate('/', { replace: true })}>
+                <span style={styles.signUpLink}>Already have an account?</span>
+            </p>
         </div>
     );
+};
+
+const styles = {
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        margin: 'auto',
+    },
+    signInText: {
+        marginBottom: '20px',
+    },
+    inputContainer: {
+        marginBottom: '15px',
+    },
+    input: {
+        width: '300px',
+        padding: '10px',
+        fontSize: '16px',
+    },
+    loginButton: {
+        backgroundColor: 'blue',
+        color: 'white',
+        padding: '10px 20px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        border: 'none',
+        width: '300px',
+    },
+    signUpText: {
+        marginTop: '20px',
+        fontSize: '14px',
+    },
+    signUpLink: {
+        color: 'blue',
+        textDecoration: 'underline',
+        cursor: 'pointer',
+    },
 };
 
 export default SignUp;

@@ -23,7 +23,7 @@ const ProjectsPage = () => {
     const tabs = [
         { label: MY_PROJECTS_LABEL, value: '0', path: MY_PROJECTS_URL }, 
         { label: SHARED_LABEL, value: '1', path: SHARED_URL },
-        { label: 'ALL(TEMPORARY)', value: '2', path: '/projects/temp' }
+        // { label: 'ALL(TEMPORARY)', value: '2', path: '/projects/temp' }
     ];
 
     const [triggerDialog, setDialogTrigger] = useState(false);
@@ -89,7 +89,7 @@ const ProjectsGrid = (props) => {
         };
 
         await axios.post(PROJECTS_API, JSON.stringify(obj), { params: { option: 'add' }});
-        axios.get(PROJECTS_API, { params: { type: 'all' }}).then((res) => setProjects(res.data.records));
+        axios.get(PROJECTS_API, { params: { owner_id: `'${userInfo.userId}'` }}).then((res) => setProjects(res.data.records));
     };
 
     useEffect(() => {

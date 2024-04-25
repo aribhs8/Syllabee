@@ -8,13 +8,14 @@ import {
     Menu,
     MenuItem,
     Typography,
+    Button,
 } from '@mui/material';
 import {
     Dashboard as DashboardIcon,
     Delete as DeleteIcon,
     Edit as EditIcon,
     ViewKanban as ViewKanbanIcon,
-    Timeline as TimelineIcon,
+    // Timeline as TimelineIcon,
     TaskAlt as TaskAltIcon,
     Description as DescriptionIcon,
     MoreVert as MoreVertIcon,
@@ -36,7 +37,7 @@ import {
     PROJECT_MEMBERS,
     PROJECT_OVERVIEW,
     PROJECT_TASKS,
-    PROJECT_TIMELINE,
+    // PROJECT_TIMELINE,
 } from '../../constants';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
@@ -44,6 +45,9 @@ import axios from 'axios';
 import DataBox from '../containers/DataBox';
 import { AuthContext } from './auth/Auth';
 import ProjectDialog from '../dialogs/ProjectDialog';
+import ProjectOverview from './ProjectOverview';
+import ProjectBoard from './ProjectBoard';
+import TaskDialog from '../dialogs/TaskDialog';
 
 const ProjectDetails = () => {
     const { id: projectId } = useParams();
@@ -51,57 +55,61 @@ const ProjectDetails = () => {
     const navigate = useNavigate();
     const { userInfo } = useContext(AuthContext);
 
-    const [showProjectDialog, setProjectDialog] = useState(false);
-    const [project, setProject] = useState(null);
-    const [showDocsDialog, setDocsDialog] = useState(false);
-    const [showMembersDialog, setMembersDialog] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
-    const menuOpen = Boolean(anchorEl);
-
     const tabs = [
         {
             label: PROJECT_OVERVIEW,
             value: '0',
             icon: <DashboardIcon />,
-            sx: { width: '100px' },
+            sx: { width: '20vw' },
             path: `/projects/${projectId}/overview`,
         },
         {
             label: PROJECT_BOARD,
             value: '1',
             icon: <ViewKanbanIcon />,
-            sx: { width: '100px' },
+            sx: { width: '20vw' },
             path: `/projects/${projectId}/board`,
         },
-        {
-            label: PROJECT_TIMELINE,
-            value: '2',
-            icon: <TimelineIcon />,
-            sx: { width: '100px' },
-            path: `/projects/${projectId}/timeline`,
-        },
+        // {
+        //     label: PROJECT_TIMELINE,
+        //     value: '2',
+        //     icon: <TimelineIcon />,
+        //     sx: { width: '100px' },
+        //     path: `/projects/${projectId}/timeline`,
+        // },
         {
             label: PROJECT_TASKS,
-            value: '3',
+            value: '2',
             icon: <TaskAltIcon />,
-            sx: { width: '100px' },
+            sx: { width: '20vw' },
             path: `/projects/${projectId}/tasks`,
         },
         {
             label: PROJECT_DOCS,
-            value: '4',
+            value: '3',
             icon: <DescriptionIcon />,
-            sx: { width: '100px' },
+            sx: { width: '20vw' },
             path: `/projects/${projectId}/docs`,
         },
         {
             label: PROJECT_MEMBERS,
-            value: '5',
+            value: '4',
             icon: <PersonIcon />,
-            sx: { width: '100px' },
+            sx: { width: '20vw' },
             path: `/projects/${projectId}/members`,
         },
     ];
+
+    const [showProjectDialog, setProjectDialog] = useState(false);
+    const [project, setProject] = useState(null);
+    const [showDocsDialog, setDocsDialog] = useState(false);
+    const [showMembersDialog, setMembersDialog] = useState(false);
+    const [showAddTaskDialog, setShowAddTaskDialog] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [currentTab, setCurrentTab] = useState(location.pathname === `/projects/${projectId}` ? '0' : tabs.findIndex((t) => t.path === location.pathname).toString());
+    const menuOpen = Boolean(anchorEl);
+
+   
 
     const handleMenuClick = (e) => {
         setAnchorEl(e.currentTarget);
@@ -139,7 +147,9 @@ const ProjectDetails = () => {
     useEffect(() => {
         if (location.pathname === `/projects/${projectId}`) {
             navigate(`/projects/${projectId}/overview`);
+            return;
         }
+        setCurrentTab(tabs.findIndex((t) => t.path === location.pathname).toString());
     }, [location, navigate, projectId]);
 
     return (
@@ -153,7 +163,7 @@ const ProjectDetails = () => {
                     <Grid item>
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link underline="hover" color="inherit" href={MY_PROJECTS_URL}>
-                Projects
+                                Projects
                             </Link>
                             <Typography color="text.primary">
                                 {project && project.title}
@@ -182,13 +192,17 @@ const ProjectDetails = () => {
                                 },
                             }}
                         >
-                            <MenuItem onClick={() => setMembersDialog(true)} disableRipple>
+                            <MenuItem onClick={() => {
+                                setMembersDialog(true);
+                                setCurrentTab('5');
+                                handleMenuClose();
+                            }} disableRipple>
                                 <ShareIcon sx={{ mr: 2 }} />
-                Share
+                                Share
                             </MenuItem>
                             <MenuItem onClick={handleDelete} disableRipple>
                                 <DeleteIcon sx={{ mr: 2 }} />
-                Delete
+                                Delete
                             </MenuItem>
                         </Menu>
                     </Grid>
@@ -198,19 +212,19 @@ const ProjectDetails = () => {
             <NavTabs
                 centered
                 tabs={tabs}
-                current={
-                    location.pathname === `/projects/${projectId}`
-                        ? '0'
-                        : tabs.findIndex((t) => t.path === location.pathname).toString()
-                }
+                current={currentTab}
             >
-                <TabPanel value="0">Overview Page</TabPanel>
-                <TabPanel value="1">Kanban Board</TabPanel>
-                <TabPanel value="2">Timeline Page</TabPanel>
-                <TabPanel value="3">
+                <TabPanel value="0">
+                    <ProjectOverview />
+                </TabPanel>
+                <TabPanel value="1">
+                    <ProjectBoard />
+                </TabPanel>
+                <TabPanel value="2">
+                    <Button variant="contained" style={{ alignContent: 'right', marginBottom: '2rem' }} onClick={() => setShowAddTaskDialog(true)}>Add Task</Button>
                     <TaskList headerParams={{ project_id: projectId }} />
                 </TabPanel>
-                <TabPanel value="4">
+                <TabPanel value="3">
                     <DocumentList
                         headerParams={{ project_id: projectId }}
                         dialog={showDocsDialog}
@@ -224,7 +238,7 @@ const ProjectDetails = () => {
                         <UploadIcon />
                     </Fab>
                 </TabPanel>
-                <TabPanel value="5">
+                <TabPanel value="4">
                     <MembersList
                         headerParams={{
                             id: projectId,
@@ -260,6 +274,12 @@ const ProjectDetails = () => {
                 }}
                 editProject={project}
                 onSubmit={handleSubmit}
+            />
+            <TaskDialog 
+                open={showAddTaskDialog}
+                onClose={() => {
+                    setShowAddTaskDialog(false);
+                }} 
             />
         </DataBox>
     );

@@ -37,15 +37,25 @@ const TaskDetails = () => {
     const [error, setError] = useState(false);
     const [isEdited, setIsEdited] = useState(false);
     const [assignee, setAssignee] = useState('');
+    const [status, setStatus] = useState('');
+    const [priority, setPriority] = useState(0);
     const [members, setMembers] = useState([]);
+
+    const statusMap = {
+        'To Do' : 0,
+        'In Progress' : 1,
+        'Done' : 2,
+    };
 
     const handleSubmit = async () => {
         const updatedTask = {
             id: task.id,
-            title,
+            title: title,
             date: date ? dayjs(date) : null,
-            note,
-            assignee
+            note: note,
+            assignee: assignee,
+            status: statusMap[status],
+            priority: priority
         };
         try {
             axios
@@ -61,6 +71,7 @@ const TaskDetails = () => {
         setDate(dayjs(task.date));
         setNote(task.note);
         setIsEdited(false);
+        setPriority(task.priority);
     };
 
     const handleTitleChange = (e) => {
@@ -83,6 +94,8 @@ const TaskDetails = () => {
                         setDate(dayjs(newTask.date));
                         setNote(newTask.note);
                         setAssignee(newTask.assignee ? newTask.assignee.user_id : '');
+                        setStatus(newTask.status);
+                        setPriority(newTask.priority);
                     });
             } catch (error) {
                 console.error('Error loading task:', error);
@@ -95,9 +108,16 @@ const TaskDetails = () => {
                     setMembers(res.data.records);
                 });
         };
+        // const fetchPriority = async () => {
+        //     axios
+        //         .get(PRIORITIES_API, { params: { title: title, date: date, note: note, project_id: projectId }})
+        //         .then((res) => {
+        //             setPriority(res.data.records);
+        //         });
+        // };
         fetchTasks();
         fetchMembers();
-        
+        // fetchPriority();
     }, []);
 
     return (
@@ -213,6 +233,52 @@ const TaskDetails = () => {
                                 (member) => 
                                     (<MenuItem key={member.user_id} value={member.user_id}>{`${member.name}`}</MenuItem>)
                             )}
+                        </Select>
+                    </FormControl>
+
+                    <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
+                        <InputLabel id="status-label">Status</InputLabel>
+                        <Select
+                            labelId="status-label"
+                            id="status"
+                            label="Status"
+                            value={status}
+                            onChange={(event) => {
+                                setStatus(event.target.value);
+                                setIsEdited(true);
+                            }}
+                            
+                        >
+                            <MenuItem key={0} value={'To Do'}>To do</MenuItem>
+                            <MenuItem key={0} value={'In Progress'}>In Progress</MenuItem>
+                            <MenuItem key={0} value={'Done'}>Done</MenuItem>
+                            
+                        </Select>
+                    </FormControl>
+
+                    <FormControl variant="filled" sx={{ mt: 2, minWidth: 120 }}>
+                        <InputLabel id="priority-label">Priority</InputLabel>
+                        <Select
+                            labelId="priority-label"
+                            id="priority"
+                            label="priority"
+                            value={priority}
+                            onChange={(event) => {
+                                setPriority(event.target.value);
+                                setIsEdited(true);
+                            }}
+                        >
+                            <MenuItem key={0} value={1}>1</MenuItem>
+                            <MenuItem key={0} value={2}>2</MenuItem>
+                            <MenuItem key={0} value={3}>3</MenuItem>
+                            <MenuItem key={0} value={4}>4</MenuItem>
+                            <MenuItem key={0} value={5}>5</MenuItem>
+                            <MenuItem key={0} value={6}>6</MenuItem>
+                            <MenuItem key={0} value={7}>7</MenuItem>
+                            <MenuItem key={0} value={8}>8</MenuItem>
+                            <MenuItem key={0} value={9}>9</MenuItem>
+                            <MenuItem key={0} value={10}>10</MenuItem>
+
                         </Select>
                     </FormControl>
 

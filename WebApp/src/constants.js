@@ -17,7 +17,7 @@ export const SHARED_URL = '/projects/shared';
 // project details constants
 export const PROJECT_OVERVIEW = 'Overview';
 export const PROJECT_BOARD = 'Board';
-export const PROJECT_TIMELINE = 'Timeline';
+// export const PROJECT_TIMELINE = 'Timeline';
 export const PROJECT_TASKS = 'Tasks';
 export const PROJECT_DOCS = 'Docs';
 export const PROJECT_MEMBERS = 'Members';
@@ -34,5 +34,7 @@ export const SAVE_TASKS_API = 'https://sdu4lfqqth.execute-api.us-east-2.amazonaw
 export const UPDATE_TASK_API = 'https://sdu4lfqqth.execute-api.us-east-2.amazonaws.com/test/updateTask';
 
 export const USERS_API = 'https://sdu4lfqqth.execute-api.us-east-2.amazonaws.com/test/getUsers';
+export const CALENDAR_API = 'https://sdu4lfqqth.execute-api.us-east-2.amazonaws.com/test/calendar';
 
 export const SUGGESTIONS_API = 'https://sdu4lfqqth.execute-api.us-east-2.amazonaws.com/test/suggestions';
+export const PRIORITIES_API = 'https://xvzsfbfdcvte3bg3xkptcsmkoe0bnupc.lambda-url.us-east-2.on.aws/';

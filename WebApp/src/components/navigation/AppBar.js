@@ -5,8 +5,8 @@ import { AuthContext } from '../pages/auth/Auth';
 
 import MuiAppBar from '@mui/material/AppBar';
 import React, { useContext } from 'react';
-import logo from '../../assets/logo.png';
-import UserAvatar from '../items/UserAvatar';
+import logo from '../../assets/new logo.png';
+import UserAvatar from '../items/UserAvatar';   
 
 
 const Bar = styled(MuiAppBar, {
@@ -35,8 +35,8 @@ const AppBar = () => {
     return (
         <Bar position="fixed" elevation={0}>
             <Toolbar variant='dense' disableGutters sx={{ paddingLeft: 1.3 }}>
-                <img src={logo} style={{ width: '25px', marginRight: 25 }} alt='Syllabus Scanner Logo' />
-                <Typography variant="subtitle" fontWeight={500} fontSize={17} noWrap component="div" flexGrow={1}>Syllabus Scanner</Typography>
+                <img src={logo} style={{ width: '25px', marginRight: 25 }} alt='Project Pulse Logo' />
+                <Typography variant="subtitle" fontWeight={500} fontSize={17} noWrap component="div" flexGrow={1}>Project Pulse</Typography>
                 {isLoggedIn && 
                  <div>
                      <IconButton

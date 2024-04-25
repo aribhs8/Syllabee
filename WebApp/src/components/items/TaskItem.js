@@ -15,7 +15,7 @@ import {
     NoteOutlined as NoteIcon,
 } from '@mui/icons-material';
 
-import { PROJECTS_API, DOCS_API } from '../../constants';
+import { DOCS_API } from '../../constants';
 import UserAvatar from '../items/UserAvatar';
 import TaskDialog from '../dialogs/TaskDialog';
 
@@ -24,6 +24,70 @@ import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
+export const OverviewItem = (props) => {
+    const { task } = props;
+    // const { task, projectId } = props;
+    // const [projectTitle, setProjectTitle] = useState(null);
+    const [originDoc, setOriginDoc] = useState(null);
+    const [isChecked, setIsChecked] = useState(false);
+
+    // const navigate = useNavigate();
+
+    // const onClick = (e) => {
+    //     e.preventDefault();
+    //     navigate(`/tasks/${task.id}`, {
+    //         state: { task, projectId, projectTitle, originDoc },
+    //     });
+    // };
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+        console.log('checked overview item');
+    };
+
+    useEffect(() => {
+        const getData = async () => {
+            // if (task.project) {
+            //     const result = await axios.get(PROJECTS_API, {
+            //         params: { id: task.project },
+            //     });
+            //     // setProjectTitle(result.data.records[0].title);
+            //     console.log(result.data.records[0].title);
+            // }
+            if (task.outline) {
+                const result = await axios.get(DOCS_API, {
+                    params: { id: task.outline },
+                });
+                setOriginDoc(result.data.records[0].title);
+            }
+        };
+
+        getData();
+    }, []);
+
+    return (
+        <Fragment>
+            <Card onClick={() => {}} sx={{ width: '100%', mb: 1 }}>
+                <ListItemButton sx={{ display: 'flex' }}>
+                    <ListItemText
+                        primary={task.title}
+                        secondary={originDoc}
+                        sx={{ width: '80%' }}
+                    />
+                    <ListItemText
+                        primary={task.date}
+                        secondary={originDoc}
+                        sx={{ width: '80%' }}
+                    />
+                    <CheckBoxIcon
+                        sx={{ mr: 2, color: isChecked ? '#06bf2b' : '#808080' }}
+                        onClick={handleCheckboxChange}
+                    />
+                </ListItemButton>
+            </Card>
+        </Fragment>
+    );
+};
 
 export const ScannedItem = (props) => {
     const { title, date } = props;
@@ -51,10 +115,15 @@ export const DocumentTaskItem = (props) => {
 
     return (
         <Fragment>
-            <Card sx={{ width: '100%', mb: '10px' }} onClick={() => setTaskDialogOpen(true)}>
+            <Card
+                sx={{ width: '100%', mb: '10px' }}
+                onClick={() => setTaskDialogOpen(true)}
+            >
                 <ListItemButton disableRipple>
                     <ListItemAvatar>
-                        <Avatar><AssignmentIcon /></Avatar>
+                        <Avatar>
+                            <AssignmentIcon />
+                        </Avatar>
                     </ListItemAvatar>
                     <ListItemText primary={task.title} secondary={task.date} />
                 </ListItemButton>
@@ -66,17 +135,17 @@ export const DocumentTaskItem = (props) => {
                 task={task}
                 onClose={() => {
                     setTaskDialogOpen(false);
-                }} />
+                }}
+            />
         </Fragment>
     );
 };
 
 export const TaskItem = (props) => {
     const { task, projectId } = props;
-    const [projectTitle, setProjectTitle] = useState(null);
+    const [projectTitle, ] = useState(null);
     const [originDoc, setOriginDoc] = useState(null);
     const navigate = useNavigate();
-    
     const onClick = (e) => {
         e.preventDefault();
         navigate(`/tasks/${task.id}`, {
@@ -86,12 +155,12 @@ export const TaskItem = (props) => {
 
     useEffect(() => {
         const getData = async () => {
-            if (task.project) {
-                const result = await axios.get(PROJECTS_API, {
-                    params: { id: task.project },
-                });
-                setProjectTitle(result.data.records[0].title);
-            }
+            // if (task.project) {
+            //     const result = await axios.get(PROJECTS_API, {
+            //         params: { id: task.project },
+            //     });
+            //     setProjectTitle(result.data.records[0].title);
+            // }
             if (task.outline) {
                 const result = await axios.get(DOCS_API, {
                     params: { id: task.outline },
@@ -151,6 +220,14 @@ export const TaskItem = (props) => {
 };
 
 // prop types
+OverviewItem.propTypes = {
+    // title: PropTypes.string,
+    // date: PropTypes.string,
+    task: PropTypes.object,
+    fetchTasks: PropTypes.func,
+    projectId: PropTypes.string,
+};
+
 ScannedItem.propTypes = {
     title: PropTypes.string,
     date: PropTypes.string,
@@ -159,10 +236,10 @@ ScannedItem.propTypes = {
 TaskItem.propTypes = {
     task: PropTypes.object,
     fetchTasks: PropTypes.func,
-    projectId: PropTypes.string
+    projectId: PropTypes.string,
 };
 
 DocumentTaskItem.propTypes = {
     task: PropTypes.object,
-    fetchTasks: PropTypes.func
+    fetchTasks: PropTypes.func,
 };

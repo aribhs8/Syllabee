@@ -27,11 +27,11 @@ const FullButton = (props) => {
 };
 
 FullButton.propTypes = {
-    children: PropTypes.object
+    children: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 };
 
 const OutlineDocsPage = (props) => {
-    const { id, file_url, text_url } = props;
+    const { id, file_url, text_url, projectId } = props;
     const [infoAlert, setInfoAlert] = useState(false);
 
     const isPDF = (url) => {
@@ -50,7 +50,7 @@ const OutlineDocsPage = (props) => {
                     isPDF(file_url) ?
                         <PdfViewer file_url={file_url} />
                         :
-                        <Paper square elevation={5} sx={{ alignSelf: 'center', padding: 3, height: '800px', width: '700px', mt: 3 }}>
+                        <Paper square elevation={5} sx={{ alignSelf: 'center', padding: 3, height: '800px', width: '70vw', mt: 3 }}>
                             <img src={file_url} alt='document' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         </Paper>
                 }
@@ -65,7 +65,7 @@ const OutlineDocsPage = (props) => {
                     </Alert>
                 </Collapse>
 
-                <ScanTasksPanel id={id} file_url={file_url} />
+                <ScanTasksPanel id={id} file_url={file_url} projectid={projectId} />
                 <AllTasksPanel id={id} />
             </Box>
         </Box>
@@ -75,11 +75,12 @@ const OutlineDocsPage = (props) => {
 OutlineDocsPage.propTypes = {
     id: PropTypes.string,
     file_url: PropTypes.string,
-    text_url: PropTypes.string
+    text_url: PropTypes.string,
+    projectId: PropTypes.number,
 };
 
 const ScanTasksPanel = (props) => {
-    const { id, file_url } = props;
+    const { id, file_url, projectid } = props;
     const [scannedTasks, setScannedTasks] = useState([]);
     const [saved, setSaved] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -87,7 +88,12 @@ const ScanTasksPanel = (props) => {
     const [showDialog, setDialog] = useState(false);
 
     const handleSave = async() => {
-        await axios.post(SAVE_TASKS_API, JSON.stringify({ scannedTasks }));
+        scannedTasks.forEach(t => {
+            t['project_id'] = projectid;
+            t['priority'] = 5;
+            t['outline_id'] = id;
+        });
+        await axios.post(SAVE_TASKS_API, JSON.stringify({ type: 'scan', data: scannedTasks }));
         setSaved(true);
     };
 
@@ -152,7 +158,8 @@ const ScanTasksPanel = (props) => {
 
 ScanTasksPanel.propTypes = {
     id: PropTypes.string,
-    file_url: PropTypes.string
+    file_url: PropTypes.string,
+    projectid: PropTypes.number,
 };
 
 const AllTasksPanel = (props) => {
@@ -166,6 +173,9 @@ const AllTasksPanel = (props) => {
 
         const result = await axios.get(TASKS_API, { params: { outline_id: id }});
         const sortedTasks = result.data.records.sort((a, b) => a.title > b.title ? 1 : -1);
+        // for (let task of sortedTasks){
+        //     await fetchPriority(task);
+        // }
 
         setTasks(sortedTasks);
         setLoading(false);
@@ -175,6 +185,24 @@ const AllTasksPanel = (props) => {
         fetchTasks();
     }, []);
 
+    // const fetchPriority = async () => {
+    //     try {
+    //         const res = axios
+    //             .get(PRIORITIES_API, { params: { title: title, note: note, date: date, project_id: projectId }})
+    //             .then((res) => {
+    //                 console.log('yooooo ' + JSON.stringify(res.data.records));
+    //                 setPriority(res.data.records);
+    //             });
+    //         const priority = res.data.records;
+    //         updateTask(task, priority);
+    //     }
+    //     catch (error) {
+    //         console.error('Error fetching priority:', error);
+    //     }
+    // };
+
+    // const updateTask = async (task, priority);
+
     return (
         <Accordion {...props}>
             <AccordionSummary id="panel1d-header" aria-controls="panel1d-content">
@@ -183,7 +211,7 @@ const AllTasksPanel = (props) => {
             <AccordionDetails>
                 {
                     tasks.length > 0 ?
-                        tasks.map(task => <ScannedItem key={task.title} title={task.title} date={task.date} />)
+                        tasks.map((task, i) => <ScannedItem key={i} title={task.title} date={task.date} />)
                         :
                         loading ?
                             [...Array(5).keys()].map((i) => <Skeleton key={i} variant='rounded' height={40} width='100%' sx={{ mb: 1 }} />)

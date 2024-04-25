@@ -2,7 +2,7 @@ import { Divider, Tab } from '@mui/material';
 import { TabContext, TabList } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 
@@ -19,7 +19,12 @@ export const NavTabs = (props) => {
         setTab(t);
         navigate(tabs[parseInt(t)].path);
     };
-
+    
+    useEffect(() => {
+        const syntheticEvent = new Event('click'); 
+        handleTabChange(syntheticEvent, current);
+    }, [current]);
+    
     return (
         <TabContext value={tab}>
             <TabList onChange={handleTabChange} sx={{ ml: 3 }} {...props}>

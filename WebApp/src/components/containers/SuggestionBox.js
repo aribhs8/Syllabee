@@ -42,7 +42,7 @@ const SuggestionBox = (props) => {
                 <Typography>Suggestions</Typography>
             </AccordionSummary>
             <AccordionDetails sx={{ overflowY: 'auto' }}>
-                {suggestions ?
+                {suggestions && suggestions.length > 0 ?
                     <Box>
                         <Typography>Please see the following documents to get started with this task:</Typography>
                         <ul>
@@ -86,7 +86,7 @@ const EmptySuggestionsContainer = (props) => {
             :
             <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' minHeight='20vh' maxHeight='20vh' sx={{ mt: 4, ml: '25%', mr: '25%' }}>
                 <img src={nullIcon} />
-                <Typography gutterBottom align='center' sx={{ mt: 2 }}>We were not able to generate any suggestions for this task. Press the Refresh button to try again.</Typography>
+                <Typography gutterBottom align='center' sx={{ mt: 2 }}>We were not able to generate any suggestions for this task. Please ensure the task description is detailed. Press the Refresh button to try again.</Typography>
                 <Button variant='contained' startIcon={<RefreshIcon />} onClick={handleRefresh}>Refresh</Button>
             </Box>
     );

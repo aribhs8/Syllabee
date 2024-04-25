@@ -24,7 +24,7 @@ const DocumentDetails = () => {
 
                         {
                             doc.is_outline ?
-                                <OutlineDocsPage id={docId} file_url={doc.file_url} text_url={doc.text_url} />
+                                <OutlineDocsPage id={docId} file_url={doc.file_url} text_url={doc.text_url} projectId={doc.project_id} />
                                 :
                                 <OtherDocsPage id={docId} file_url={doc.file_url} text_url={doc.text_url} />
                         }

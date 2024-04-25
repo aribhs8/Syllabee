@@ -40,7 +40,7 @@ const OtherDocsPage = (props) => {
                     isPDF(file_url) ?
                         <PdfViewer file_url={file_url} />
                         :
-                        <Paper square elevation={5} sx={{ alignSelf: 'center', padding: 3, height: '800px', width: '700px', mt: 3 }}>
+                        <Paper square elevation={5} sx={{ alignSelf: 'center', padding: 3, height: '800px', width: '70vw', mt: 3 }}>
                             <img src={file_url} alt='document' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         </Paper>
                 }
